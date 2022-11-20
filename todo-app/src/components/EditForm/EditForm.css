@@ -1,0 +1,13 @@
+.formEdit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.btnWrapper {
+    padding: 10px 0;
+    display: flex;
+    gap: 15px;
+}
+.btnWrapper button {
+    padding: 2px 5px;
+}
