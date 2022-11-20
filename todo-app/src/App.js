@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CreateTodoForm from "./components/CreateTodoForm/CreateTodoForm";
 import Modal from "./components/Modal/Modal";
+import TodoList from "./components/TodoList/TodoList";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       >
         Add todo
       </button>
+      <TodoList />
       <Modal onClose={onClose} open={isOpenCreate}>
             <CreateTodoForm onClose={onClose} />
           </Modal>
