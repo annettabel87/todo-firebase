@@ -11,7 +11,7 @@ const TodoList = () => {
   return (
     <div className="todoList">
       {todos.length !== 0 ? (
-        todos.map((todo) => <Todo key={todo.id} {...todo} />)
+        todos.map((todo) => <Todo key={todo.key} {...todo} />)
       ) : (
         <div>no todos</div>
       )}

@@ -40,6 +40,7 @@ const Todo = (props) => {
               {completed ? "Yes" : "No"}
             </button>
           </div>
+          {props.file !==  null ?  <a href={props.file} download="true" target="_blank" rel="noreferrer">file</a>: <></>}
           <button onClick={() => setIsEdit(true)}>edit</button>
         </div>
       )}
