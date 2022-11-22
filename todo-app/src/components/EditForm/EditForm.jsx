@@ -2,7 +2,7 @@ import { useState } from "react";
 import todoApi from "../../API/todoAPI";
 import "./EditForm.css";
 
-const EditForm = ({todo, setIsEdit}) => {
+const EditForm = ({ todo, setIsEdit }) => {
   const [title, setTitle] = useState(todo.title);
   const [description, setDescription] = useState(todo.description);
   const [date, setDate] = useState(todo.date);
@@ -14,14 +14,14 @@ const EditForm = ({todo, setIsEdit}) => {
       title,
       description,
       date,
-      completed: false,
+      completed: todo.completed,
     };
-    todoApi.updateTodo(updateTodo);    
-    setIsEdit(false)
+    todoApi.updateTodo(updateTodo);
+    setIsEdit(false);
   };
   const chancelEdit = () => {
-    setIsEdit(false)
-  }
+    setIsEdit(false);
+  };
   const handlerChangeTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -32,12 +32,13 @@ const EditForm = ({todo, setIsEdit}) => {
   const handlerChangeDescription = (e) => {
     setDescription(e.target.value);
   };
+
   return (
     <div>
       <form className="formEdit" onSubmit={(e) => onSubmit(e)}>
         <label htmlFor="title">
           <input
-            type="text"            
+            type="text"
             required
             id="title"
             name="title"
@@ -47,7 +48,7 @@ const EditForm = ({todo, setIsEdit}) => {
         </label>
         <label htmlFor="description">
           <input
-            type="text"            
+            type="text"
             required
             id="description"
             name="description"
@@ -65,10 +66,9 @@ const EditForm = ({todo, setIsEdit}) => {
           ></input>
         </label>
         <div className="btnWrapper">
-        <button type="submit">Edit</button>
-        <button onClick={chancelEdit}>chanel</button>
+          <button type="submit">Edit</button>
+          <button onClick={chancelEdit}>chanel</button>
         </div>
-        
       </form>
     </div>
   );

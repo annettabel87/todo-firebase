@@ -1,32 +1,33 @@
 import todoApi from "../../API/todoAPI";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EditForm from "../EditForm/EditForm";
+import AddFile from "../AddFile/AddFile";
 import "./Todo.css";
 
 const Todo = (props) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [completed, setCompleted] = useState(props.completed);
-
-  useEffect(() => {
-    const updatedObj = {
-      ...props,
-      completed: completed,
-    };
-    todoApi.updateTodo(updatedObj);
-  }, [completed, props]);
 
   const toggleCompleted = () => {
-    setCompleted(!completed);
+    todoApi.updateTodo({ ...props, completed: !props.completed });
   };
 
   const deleteTodo = () => {
-    todoApi.removeTodo(props.id);
+    todoApi.removeTodo(props.id, props.file.id).catch((error) => {
+      console.log(error)
+    });
+  };
+  const addFile = (id, url) => {
+    const newTodo = { ...props, file: { id, url } };
+    todoApi.updateTodo(newTodo);
   };
   return (
     <div className="todo">
-      <button className="deleteBtn" onClick={deleteTodo}>
-        X
-      </button>
+      {!isEdit && (
+        <button className="deleteBtn" onClick={deleteTodo}>
+          X
+        </button>
+      )}
+
       {isEdit ? (
         <EditForm todo={props} setIsEdit={setIsEdit} />
       ) : (
@@ -36,12 +37,26 @@ const Todo = (props) => {
           <p className="text">{props.date}</p>
           <div>
             Completed:
-            <button className="completedBtn" onClick={toggleCompleted}>
-              {completed ? "Yes" : "No"}
+            <button className="todoBtn" onClick={toggleCompleted}>
+              {props.completed ? "Yes" : "No"}
             </button>
           </div>
-          {props.file !==  null ?  <a href={props.file} download="true" target="_blank" rel="noreferrer">file</a>: <></>}
-          <button onClick={() => setIsEdit(true)}>edit</button>
+          {props.file ? (
+            <a
+              className="dwnBtn"
+              href={props.file.url}
+              download="true"
+              target="_blank"
+              rel="noreferrer"
+            >
+              download file
+            </a>
+          ) : (
+            <AddFile callback={addFile} />
+          )}
+          <button className="todoBtn" onClick={() => setIsEdit(true)}>
+            edit
+          </button>
         </div>
       )}
     </div>
