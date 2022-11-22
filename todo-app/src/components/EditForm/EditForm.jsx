@@ -57,6 +57,7 @@ const EditForm = ({ todo, setIsEdit }) => {
           ></input>
         </label>
         <label htmlFor="date">
+        Deadline: 
           <input
             type="date"
             id="date"

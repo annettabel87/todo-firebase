@@ -1,11 +1,13 @@
+import { useState, useEffect } from "react";
 import todoApi from "../../API/todoAPI";
-import { useState } from "react";
 import EditForm from "../EditForm/EditForm";
 import AddFile from "../AddFile/AddFile";
+import { checkDeadline } from "../../utils/dateUtils";
 import "./Todo.css";
 
 const Todo = (props) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [deadline, setDeadline] = useState(false);
 
   const toggleCompleted = () => {
     todoApi.updateTodo({ ...props, completed: !props.completed });
@@ -20,6 +22,11 @@ const Todo = (props) => {
     const newTodo = { ...props, file: { id, url } };
     todoApi.updateTodo(newTodo);
   };
+ 
+  useEffect(() => {
+    setDeadline(checkDeadline(props.date));
+  }, [props.date]);
+
   return (
     <div className="todo">
       {!isEdit && (
@@ -34,11 +41,11 @@ const Todo = (props) => {
         <div className="formLabel">
           <p className="title">{props.title}</p>
           <p className="text">{props.description}</p>
-          <p className="text">{props.date}</p>
+          <p className={`text ${deadline && "wrang"}`}>Deadline: {props.date}</p>
           <div>
             Completed:
             <button className="todoBtn" onClick={toggleCompleted}>
-              {props.completed ? "Yes" : "No"}
+              {props.completed ? <span>&#10004;</span> : <span >&#10060;</span>}
             </button>
           </div>
           {props.file ? (

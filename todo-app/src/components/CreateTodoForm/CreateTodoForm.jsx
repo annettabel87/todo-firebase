@@ -1,12 +1,13 @@
 import { useState } from "react";
 import todoApi from "../../API/todoAPI";
+import { getNowDate } from "../../utils/dateUtils";
 import "./CreateTodoForm.css";
 
 const CreateTodoForm = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-
+  const minDate = getNowDate();
   const clearForm = () => {
     setTitle("");
     setDescription("");
@@ -75,12 +76,13 @@ const CreateTodoForm = ({ onClose }) => {
             ></input>
           </label>
           <label className="formLabel" htmlFor="date">
-            <div className="inputTitle">Date: </div>
+            <div className="inputTitle">Deadline: </div>
             <input
               type="date"
               id="date"
               name="date"
               value={date}
+              min={minDate}
               onChange={handlerChangeDate}
             ></input>
           </label>
