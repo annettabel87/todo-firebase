@@ -1,5 +1,6 @@
 import { useState } from "react";
 import todoApi from "../../API/todoAPI";
+import { getNowDate } from "../../utils/dateUtils";
 import "./EditForm.css";
 
 const EditForm = ({ todo, setIsEdit }) => {
@@ -15,6 +16,7 @@ const EditForm = ({ todo, setIsEdit }) => {
       description,
       date,
       completed: todo.completed,
+      file: todo.file
     };
     todoApi.updateTodo(updateTodo);
     setIsEdit(false);
@@ -63,6 +65,7 @@ const EditForm = ({ todo, setIsEdit }) => {
             id="date"
             name="date"
             value={date}
+            min={getNowDate()}
             onChange={handlerChangeDate}
           ></input>
         </label>
